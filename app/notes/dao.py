@@ -11,11 +11,11 @@ class NoteDAO(BaseDAO):
     model = Note
 
     @classmethod
-    async def add(cls, **values):
+    async def add(cls, user, **values):
         async with async_session_maker() as session:
             async with session.begin():
                 new_values = await cls.check_data(values)
-                new_instance = cls.model(**new_values)
+                new_instance = cls.model(author=user, **new_values)
                 session.add(new_instance)
                 try:
                     await session.commit()
@@ -25,9 +25,10 @@ class NoteDAO(BaseDAO):
                 return new_instance
 
     @classmethod
-    async def update(cls, filter_by, **values):
+    async def update(cls, user, filter_by, **values):
         async with async_session_maker() as session:
             async with session.begin():
+                filter_by['author'] = user
                 new_values = await cls.check_data(values)
                 query = (
                     sqlalchemy_update(cls.model)

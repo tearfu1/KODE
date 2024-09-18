@@ -8,24 +8,24 @@ class BaseDAO:
     model = None
 
     @classmethod
-    async def find_all(cls, **filter_by):
+    async def find_all(cls, user, **filter_by):
         async with async_session_maker() as session:
-            query = select(cls.model).filter_by(**filter_by).order_by(cls.model.id)
+            query = select(cls.model).filter_by(author=user).filter_by(**filter_by).order_by(cls.model.id)
             result = await session.execute(query)
             return result.scalars().all()
 
     @classmethod
-    async def find_one_or_none_by_id(cls, data_id: int):
+    async def find_one_or_none_by_id(cls, user, data_id: int):
         async with async_session_maker() as session:
-            query = select(cls.model).filter_by(id=data_id)
+            query = select(cls.model).filter_by(author=user).filter_by(id=data_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
     @classmethod
-    async def add(cls, **values):
+    async def add(cls, user, **values):
         async with async_session_maker() as session:
             async with session.begin():
-                new_instance = cls.model(**values)
+                new_instance = cls.model(author=user, **values)
                 session.add(new_instance)
                 try:
                     await session.commit()
@@ -35,9 +35,10 @@ class BaseDAO:
                 return new_instance
 
     @classmethod
-    async def update(cls, filter_by, **values):
+    async def update(cls, user, filter_by, **values):
         async with async_session_maker() as session:
             async with session.begin():
+                filter_by['author'] = user
                 query = (
                     sqlalchemy_update(cls.model)
                     .where(*[getattr(cls.model, k) == v for k, v in filter_by.items()])
@@ -53,12 +54,13 @@ class BaseDAO:
                 return result.rowcount
 
     @classmethod
-    async def delete(cls, delete_all: bool = False, **filter_by):
+    async def delete(cls, user, delete_all: bool = False, **filter_by):
         if not delete_all and not filter_by:
             raise ValueError("Необходимо указать хотя бы один параметр для удаления.")
 
         async with async_session_maker() as session:
             async with session.begin():
+                filter_by['author'] = user
                 query = sqlalchemy_delete(cls.model).filter_by(**filter_by)
                 result = await session.execute(query)
                 try:
