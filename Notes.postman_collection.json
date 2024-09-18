@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "67fc319a-7624-48a4-a426-83363a260a23",
+		"name": "getNotes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37844834"
+	},
+	"item": [
+		{
+			"name": "создание заметки пользователем с орфографическими ошибками",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"первая зометка\",\r\n    \"content\": \"и ее садиржимое\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/add",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"add"
+					]
+				},
+				"description": "StartFragmentсоздание заметки пользователем с орфографическими ошибкамиEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "заметки 1 пользователя",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание заметки пользователем с орфографическими ошибками Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user2_api_key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"вторая заметка\",\r\n    \"content\": \"она без ошибок\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/add",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"add"
+					]
+				},
+				"description": "StartFragmentсоздание заметки пользователем с орфографическими ошибкамиEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "заметки 2пользователя",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user2_api_key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Попытка поменять чужую заметку",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"теперь это не заметка\",\r\n    \"content\": \"и не описание\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/edit/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"edit",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Попытка поменять свою заметку",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"теперь это не заметка\",\r\n    \"content\": \"и не описание\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/edit/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"edit",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаление своей заметки",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/delete/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"delete",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаление чужой заметки",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "user1_api_key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/notes/delete/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"notes",
+						"delete",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
