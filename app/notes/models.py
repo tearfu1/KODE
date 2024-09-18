@@ -10,7 +10,8 @@ class Note(Base):
 
     def __str__(self):
         return (f"{self.__class__.__name__}(id={self.id}, "
-                f"first_name={self.title!r}")
+                f"title={self.title!r},"
+                f"content={self.content!r})")
 
     def __repr__(self):
         return str(self)
