@@ -15,4 +15,11 @@ class Note(Base):
     def __repr__(self):
         return str(self)
 
-
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "content": self.content,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat()
+        }
